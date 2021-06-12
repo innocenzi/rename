@@ -1,4 +1,4 @@
-#!/bin/env node
+#!/usr/bin/env node
 
 import createInterface from 'cac'
 import { startRenameProcess } from './rename'
