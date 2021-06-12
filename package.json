@@ -21,7 +21,7 @@
 	"scripts": {
 		"dev": "yarn build && node ./dist/index.js",
 		"build": "tsup src/index.ts --format cjs,esm --dts-resolve",
-		"test": "jest",
+		"test": "jest --passWithNoTests",
 		"prepublishOnly": "npm run build"
 	},
 	"license": "MIT",

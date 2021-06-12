@@ -4,8 +4,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/innocenzi/renamer/actions?query=workflow%3Atests">
-    <img alt="Status" src="https://github.com/innocenzi/renamer/workflows/tests/badge.svg">
+  <a href="https://github.com/innocenzi/renamer/actions?query=workflow%3Aci">
+    <img alt="Status" src="https://github.com/innocenzi/renamer/workflows/ci.yml/badge.svg">
   </a>
   <span>&nbsp;</span>
   <a href="https://www.npmjs.com/package/renamer">
