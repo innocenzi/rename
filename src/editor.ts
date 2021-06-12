@@ -1,35 +1,30 @@
 import { writeFile, readFile, unlink } from 'fs/promises'
 import { join } from 'path'
 import { run } from './run'
+import temp from 'temp-dir'
 
 export const EDITOR_FILE_NAME = '.BATCH_RENAME'
-
-/**
- * Gets an absolute path to the editor path.
- */
-export function getEditorFilePath(directory: string) {
-	return join(directory, EDITOR_FILE_NAME)
-}
+export const EDITOR_FILE_PATH = join(temp, EDITOR_FILE_NAME)
 
 /**
  * Deletes the editor file.
  */
-export async function deleteEditorFile(directory: string) {
-	await unlink(getEditorFilePath(directory))
+export async function deleteEditorFile() {
+	await unlink(EDITOR_FILE_PATH)
 }
 
 /**
  * Writes the files in the editor file.
  */
-export async function writeEditorFile(directory: string, files: string[]) {
-	await writeFile(getEditorFilePath(directory), files.join('\n'))
+export async function writeEditorFile(files: string[]) {
+	await writeFile(EDITOR_FILE_PATH, files.join('\n'))
 }
 
 /**
  * Gets the files from the editor file.
  */
-export async function readEditorFile(directory: string) {
-	const result = await readFile(getEditorFilePath(directory), { encoding: 'utf-8' })
+export async function readEditorFile() {
+	const result = await readFile(EDITOR_FILE_PATH, { encoding: 'utf-8' })
 
 	return result.split('\n').filter((line) => line.length > 0)
 }
@@ -37,6 +32,6 @@ export async function readEditorFile(directory: string) {
 /**
  * Opens the configured editor with the editor file.
  */
-export async function openEditor(directory: string) {
-	await run(`code -w ${getEditorFilePath(directory)}`)
+export async function openEditor() {
+	await run(`code -w ${EDITOR_FILE_PATH}`)
 }

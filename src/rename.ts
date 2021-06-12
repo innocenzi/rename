@@ -91,10 +91,10 @@ export async function startRenameProcess(options: Partial<Options>) {
 	const resolved = getOptionsWithDefaults(options)
 	const filesToRename = await readdir(resolved.directory)
 
-	await writeEditorFile(resolved.directory, filesToRename)
-	await openEditor(resolved.directory)
+	await writeEditorFile(filesToRename)
+	await openEditor()
 
-	const renamedFiles = await readEditorFile(resolved.directory)
+	const renamedFiles = await readEditorFile()
 
 	// If the amount of lines in the file does not equal the amount
 	// of files to rename, there will be an offset. It's most likely an error.
@@ -114,5 +114,5 @@ export async function startRenameProcess(options: Partial<Options>) {
 
 	logger.feedback(entries, resolved)
 
-	await deleteEditorFile(resolved.directory)
+	await deleteEditorFile()
 }
