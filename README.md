@@ -40,7 +40,7 @@ In a directory, use `rn` to open Code. Each line corresponds to a file:
 
 - [ ] Tests
 - [ ] Support other editors
-      This feature requires the ability to have a persistent configuration, the same way `git` does.
+  - Implies persistent configuration, the same way `git` does.
 
 <p align="center">
   <br />
