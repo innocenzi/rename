@@ -1,5 +1,4 @@
-import { green } from 'kleur'
-import { gray, red, strikethrough, yellow } from 'kleur/colors'
+import { green, gray, red, strikethrough, yellow } from 'kleur/colors'
 import { Entry, Operation, Options } from './rename'
 
 const isTesting = process.env.NODE_ENV === 'testing'
