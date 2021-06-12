@@ -11,29 +11,36 @@
   <a href="https://www.npmjs.com/package/@innocenzi/rename">
     <img alt="npm" src="https://img.shields.io/npm/v/@innocenzi/rename">
   </a>
+  <br />
+  <pre><div align="center">npm i -g @innocenzi/rename</div></pre>
 </p>
 
-<p align="center">
-  <br />
-  ·
-  <br />
-</p>
+&nbsp;
 
 ## Usage
 
-Install it globally via your package manager: 
+In a directory, use `rn` to open Code. Each line corresponds to a file:
 
-```bash
-npm i -g @innocenzi/rename
-```
+- If you change a line, the corresponding file will be renamed accordingly.
+- If you erase the line while keeping the line jump, the file will be deleted.
 
-In a directory, use `rn` to open Code. Each line corresponds to a file. If you change a line, the corresponding file will be renamed accordingly. If you erase the line while keeping the line jump, the file will be deleted.
+&nbsp;
+
+## Options
+
+| Argument   | Description                                                            |
+| ---------- | ---------------------------------------------------------------------- |
+| `--dry`    | Prints the output to the console without actually applying the changes |
+| `--force`  | Allows offsetting file names when completely removing a line           |
+| `--silent` | Prevents from printing to the console                                  |
+
+&nbsp;
 
 ## Roadmap
 
 - [ ] Tests
 - [ ] Support other editors
-  This feature requires the ability to have a persistent configuration, the same way `git` does.
+      This feature requires the ability to have a persistent configuration, the same way `git` does.
 
 <p align="center">
   <br />
