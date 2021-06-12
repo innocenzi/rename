@@ -1,4 +1,4 @@
-import { readdir, writeFile, readFile, unlink, rename } from 'fs/promises'
+import { writeFile, readFile, unlink } from 'fs/promises'
 import { join } from 'path'
 import { run } from './run'
 

@@ -5,7 +5,7 @@ import { startRenameProcess } from './rename'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { invoke, findDirectory } from './utils'
-import { red } from 'kleur/colors'
+import { logger } from './logger'
 
 invoke(async () => {
 	const { version } = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), { encoding: 'utf-8' }))
@@ -29,7 +29,7 @@ invoke(async () => {
 			dry: options.dry,
 		})
 	} catch (error) {
-		console.log(`[${red('error')}]`, error.message)
+		logger.error(error)
 		process.exit(1)
 	}
 })

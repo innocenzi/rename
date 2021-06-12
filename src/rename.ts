@@ -1,10 +1,15 @@
 import { readdir, unlink, rename } from 'fs/promises'
-import { gray, red, strikethrough, yellow } from 'kleur/colors'
-import { question } from './question'
 import { join } from 'path'
 import { deleteEditorFile, openEditor, readEditorFile, writeEditorFile } from './editor'
+import { logger } from './logger'
 
 export type Operation = 'DELETE' | 'RENAME' | 'NONE'
+export interface Entry {
+	initialName: string
+	finalName: string
+	operation: Operation
+}
+
 export interface Options {
 	/**
 	 * The directory in which to perform the operation.
@@ -20,6 +25,11 @@ export interface Options {
 	 * Whether to write on the standard output.
 	 */
 	silent: boolean
+
+	/**
+	 * Whether to force the operation even if there is a mismatch.
+	 */
+	force: boolean
 }
 
 /**
@@ -29,6 +39,7 @@ function getOptionsWithDefaults(options: Partial<Options>): Options {
 	return {
 		dry: true,
 		silent: false,
+		force: false,
 		directory: process.cwd(),
 		...options,
 	}
@@ -58,26 +69,18 @@ export async function applyOperation(
 	operation: Operation,
 	options: Options,
 ) {
-	// TODO: clean up
+	logger.operation(operation, initialFileName, finalFileName)
+
+	if (options.dry) {
+		return
+	}
 
 	if (operation === 'DELETE') {
-		console.log(`[${red('delete')}] ${gray(initialFileName)} » ${red(strikethrough(initialFileName))}`)
-
-		if (!options.dry) {
-			await unlink(join(options.directory, initialFileName))
-		}
+		await unlink(join(options.directory, initialFileName))
 	}
 
 	if (operation === 'RENAME') {
-		console.log(`[${yellow('rename')}] ${gray(initialFileName)} » ${yellow(finalFileName)}`)
-
-		if (!options.dry) {
-			await rename(join(options.directory, initialFileName), join(options.directory, finalFileName))
-		}
-	}
-
-	if (operation === 'NONE') {
-		console.log(`  [${gray('keep')}] ${gray(initialFileName)} » ${gray(finalFileName)}`)
+		await rename(join(options.directory, initialFileName), join(options.directory, finalFileName))
 	}
 }
 
@@ -93,29 +96,23 @@ export async function startRenameProcess(options: Partial<Options>) {
 
 	const renamedFiles = await readEditorFile(resolved.directory)
 
-	// TODO: clean up
-	if (filesToRename.length !== renamedFiles.length) {
-		const result = await question(
-			`[${yellow(
-				'warning',
-			)}] Amount of lines does not match initial list of files, there is likely a mismatch. Continue? `,
-		)
-
-		if (!['y', 'o'].includes(result.toLowerCase())) {
-			await deleteEditorFile(resolved.directory)
-			process.exit(0)
-		}
+	// If the amount of lines in the file does not equal the amount
+	// of files to rename, there will be an offset. It's most likely an error.
+	if (!resolved.force && filesToRename.length !== renamedFiles.length) {
+		throw new Error('Line count mismatch. Operation canceled.')
 	}
 
-	for (let i = 0; i < filesToRename.length; i++) {
-		const initialName = filesToRename[i] ?? ''
-		const finalName = renamedFiles[i] ?? ''
-		const operation = getOperation(initialName, finalName)
+	const entries: Entry[] = filesToRename.map((initialName, index) => ({
+		initialName,
+		finalName: renamedFiles[index] ?? '',
+		operation: getOperation(initialName, renamedFiles[index]),
+	}))
 
+	for (const { initialName, finalName, operation } of entries) {
 		await applyOperation(initialName, finalName, operation, resolved)
 	}
 
-	// TODO: better end-of-operation feedback
+	logger.feedback(entries)
 
 	await deleteEditorFile(resolved.directory)
 }
