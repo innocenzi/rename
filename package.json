@@ -1,5 +1,5 @@
 {
-	"name": "renamer",
+	"name": "@innocenzi/rename",
 	"version": "0.0.1",
 	"description": "Rename files from your editor",
 	"publishConfig": {
