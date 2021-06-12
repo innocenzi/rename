@@ -35,7 +35,7 @@ export interface Options {
 /**
  * Merges the given options with the default ones.
  */
-function getOptionsWithDefaults(options: Partial<Options>): Options {
+export function getOptionsWithDefaults(options: Partial<Options>): Options {
 	return {
 		dry: true,
 		silent: false,

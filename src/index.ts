@@ -21,6 +21,8 @@ invoke(async () => {
 		return process.exit(0)
 	}
 
+	logger.options({ silent: options.silent })
+
 	try {
 		await startRenameProcess({
 			directory: await findDirectory(args[0]),
