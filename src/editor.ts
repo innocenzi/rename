@@ -7,6 +7,13 @@ export const EDITOR_FILE_NAME = '.BATCH_RENAME'
 export const EDITOR_FILE_PATH = join(temp, EDITOR_FILE_NAME)
 
 /**
+ * Gets the command used to start the editor.
+ */
+export function getEditorCommand() {
+	return process.env.RENAME_EDITOR ?? process.env.EDITOR ?? 'code -w'
+}
+
+/**
  * Deletes the editor file.
  */
 export async function deleteEditorFile() {
@@ -33,5 +40,9 @@ export async function readEditorFile() {
  * Opens the configured editor with the editor file.
  */
 export async function openEditor() {
-	await run(`code -w ${EDITOR_FILE_PATH}`)
+	try {
+		await run(`${getEditorCommand()} ${EDITOR_FILE_PATH}`)
+	} catch (error) {
+		throw new Error('Could not open an editor. Make sure the RENAME_EDITOR or EDITOR environment variable is set up.')
+	}
 }
