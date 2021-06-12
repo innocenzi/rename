@@ -25,11 +25,6 @@ export interface Options {
 	 * Whether to write on the standard output.
 	 */
 	silent: boolean
-
-	/**
-	 * Whether to force the operation even if there is a mismatch.
-	 */
-	force: boolean
 }
 
 /**
@@ -39,7 +34,6 @@ export function getOptionsWithDefaults(options: Partial<Options>): Options {
 	return {
 		dry: true,
 		silent: false,
-		force: false,
 		directory: process.cwd(),
 		...options,
 	}
@@ -98,7 +92,7 @@ export async function startRenameProcess(options: Partial<Options>) {
 
 	// If the amount of lines in the file does not equal the amount
 	// of files to rename, there will be an offset. It's most likely an error.
-	if (!resolved.force && filesToRename.length !== renamedFiles.length) {
+	if (filesToRename.length !== renamedFiles.length) {
 		throw new Error('Line count mismatch. Operation canceled.')
 	}
 

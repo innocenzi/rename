@@ -32,7 +32,6 @@ In a directory, use `rn` to open your configured editor. Each line corresponds t
 | Argument   | Description                                                            |
 | ---------- | ---------------------------------------------------------------------- |
 | `--dry`    | Prints the output to the console without actually applying the changes |
-| `--force`  | Allows offsetting file names when completely removing a line           |
 | `--silent` | Prevents from printing to the console                                  |
 
 &nbsp;

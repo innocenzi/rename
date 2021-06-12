@@ -11,7 +11,6 @@ invoke(async () => {
 	const cli = createInterface('renamer')
 		.option('-d, --dry', 'Do not actually apply the changes', { default: false })
 		.option('-s, --silent', 'Do not write on the standard output', { default: false })
-		.option('-f, --force', 'Allow line count mismatches', { default: false })
 		.usage('[directory] [...options]')
 		.version(version)
 		.help()
@@ -29,7 +28,6 @@ invoke(async () => {
 			directory: await findDirectory(args[0]),
 			silent: options.silent,
 			dry: options.dry,
-			force: options.force,
 		})
 	} catch (error) {
 		logger.error(error)
