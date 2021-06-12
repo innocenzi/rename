@@ -31,9 +31,7 @@ export async function writeEditorFile(files: string[]) {
  * Gets the files from the editor file.
  */
 export async function readEditorFile() {
-	const result = await readFile(EDITOR_FILE_PATH, { encoding: 'utf-8' })
-
-	return result.split('\n').filter((line) => line.length > 0)
+	return (await readFile(EDITOR_FILE_PATH, { encoding: 'utf-8' })).split('\n')
 }
 
 /**
