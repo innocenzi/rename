@@ -1,6 +1,6 @@
 import { green } from 'kleur'
 import { gray, red, strikethrough, yellow } from 'kleur/colors'
-import { Entry, Operation } from './rename'
+import { Entry, Operation, Options } from './rename'
 
 const isTesting = process.env.NODE_ENV === 'testing'
 
@@ -13,15 +13,15 @@ function operation(operation: Operation, initialFileName: string, finalFileName:
 	}
 
 	if (operation === 'DELETE') {
-		console.log(`[${red('delete')}] ${gray(initialFileName)} » ${red(strikethrough(initialFileName))}`)
+		console.log(`${prefix(red('delete'))} ${gray(initialFileName)} ${gray('»')} ${red(strikethrough(initialFileName))}`)
 	}
 
 	if (operation === 'RENAME') {
-		console.log(`[${yellow('rename')}] ${gray(initialFileName)} » ${yellow(finalFileName)}`)
+		console.log(`${prefix(yellow('rename'))} ${gray(initialFileName)} ${gray('»')} ${yellow(finalFileName)}`)
 	}
 
 	if (operation === 'NONE') {
-		console.log(`  [${gray('keep')}] ${gray(initialFileName)} » ${gray(finalFileName)}`)
+		console.log(`${prefix(gray('ignore'))} ${gray(initialFileName)} ${gray('»')} ${gray(finalFileName)}`)
 	}
 }
 
@@ -33,25 +33,27 @@ function error(error: Error) {
 		return
 	}
 
-	console.log(`[${red('error')}] ${error.message}`)
+	console.log(`${prefix(red('error'))} ${error.message}`)
 }
 
 /**
  * Logs feedback about the operations.
  */
-function feedback(entries: Entry[]) {
+function feedback(entries: Entry[], resolved: Options) {
 	if (isTesting) {
 		return
 	}
 
 	const renames = entries.filter(({ operation }) => operation === 'RENAME').length
 	const deletions = entries.filter(({ operation }) => operation === 'DELETE').length
+	const total = renames + deletions
+	const feedback = `${total} file${total === 1 ? '' : 's'} updated (${renames} renamed, ${deletions} deleted).`
 
-	console.log(
-		`[${green('success')}] ${entries.length} file${
-			entries.length > 1 ? 's' : ''
-		} updated (${renames} renamed, ${deletions} deleted).`,
-	)
+	console.log(`${prefix(resolved.dry ? yellow('dry run') : green('success'))} ${feedback}`)
+}
+
+function prefix(str: string) {
+	return `[${str}]`
 }
 
 export const logger = {

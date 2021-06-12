@@ -112,7 +112,7 @@ export async function startRenameProcess(options: Partial<Options>) {
 		await applyOperation(initialName, finalName, operation, resolved)
 	}
 
-	logger.feedback(entries)
+	logger.feedback(entries, resolved)
 
 	await deleteEditorFile(resolved.directory)
 }
