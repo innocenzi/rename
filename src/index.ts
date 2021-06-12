@@ -3,12 +3,11 @@
 import createInterface from 'cac'
 import { startRenameProcess } from './rename'
 import { readFile } from 'fs/promises'
-import { join } from 'path'
 import { invoke, findDirectory } from './utils'
 import { logger } from './logger'
 
 invoke(async () => {
-	const { version } = JSON.parse(await readFile(join(__dirname, '..', 'package.json'), { encoding: 'utf-8' }))
+	const { version } = JSON.parse(await readFile(new URL('../package.json', import.meta.url), { encoding: 'utf-8' }))
 	const cli = createInterface('renamer')
 		.option('-d, --dry', 'Do not actually apply the changes', { default: false })
 		.option('-s, --silent', 'Do not write on the standard output', { default: false })
@@ -18,7 +17,7 @@ invoke(async () => {
 
 	const { options, args } = cli.parse()
 
-	if (options.help) {
+	if (options.help || options.version) {
 		return process.exit(0)
 	}
 
