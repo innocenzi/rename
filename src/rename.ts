@@ -90,6 +90,13 @@ export async function startRenameProcess(options: Partial<Options>) {
 
 	const renamedFiles = await readEditorFile()
 
+	// If the renamed file count is the same as the original file count plus one,
+	// and that last line is empty, it's most likely a line added by an editor, so we
+	// remove it to avoid the line count mismatch exception.
+	if (filesToRename.length === renamedFiles.length - 1 && renamedFiles.slice(-1).shift()?.length === 0) {
+		renamedFiles.pop()
+	}
+
 	// If the amount of lines in the file does not equal the amount
 	// of files to rename, there will be an offset. It's most likely an error.
 	if (filesToRename.length !== renamedFiles.length) {
