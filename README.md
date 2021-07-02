@@ -76,10 +76,14 @@ The following table is a reference from the [Git documentation](https://git-scm.
 <p align="center">
   <br />
   <br />
+  ·
+  <br />
+  <br />
   <img width="800px" src="https://i.imgur.com/ou5lra2.gif" alt="Demonstration of the CLI" />
   <br />
   <br />
   <img width="800px" src="https://i.imgur.com/SLoR6C1.gif" alt="Demonstration of the CLI" />
+  <br />
   <br />
   ·
   <br />
