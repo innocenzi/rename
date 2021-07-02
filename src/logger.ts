@@ -65,8 +65,9 @@ export class Logger {
 
 		const renames = entries.filter(({ operation }) => operation === 'RENAME').length
 		const deletions = entries.filter(({ operation }) => operation === 'DELETE').length
-		const total = renames + deletions
-		const feedback = `${total} file${total === 1 ? '' : 's'} updated (${renames} renamed, ${deletions} deleted).`
+		const updated = renames + deletions
+		const total = entries.length
+		const feedback = `${updated} file${updated === 1 ? '' : 's'} updated (${renames} renamed, ${deletions} deleted, ${total} total).`
 
 		console.log(`${prefix(resolved.dry ? yellow('dry run') : green('success'))} ${feedback}`)
 	}
