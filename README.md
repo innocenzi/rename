@@ -25,6 +25,11 @@ In a directory, use `rn` to open your configured editor. Each line corresponds t
 - If you change a line, the corresponding file will be renamed accordingly.
 - If you erase the line while keeping the line jump, the file will be deleted.
 
+Note the following scenarios: 
+
+- If you completely delete a line, the operations will be canceled.
+- If you rename multiple files with the exact same name, the last one will take over and the previous ones will be deleted.
+
 &nbsp;
 
 ## Options
