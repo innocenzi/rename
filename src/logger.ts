@@ -45,6 +45,17 @@ export class Logger {
 	}
 
 	/**
+	 * Logs an information.
+	 */
+	info(message: string) {
+		if (!this.shouldPrint()) {
+			return
+		}
+
+		console.log(`${prefix(yellow('info'))} ${message}`)
+	}
+
+	/**
 	 * Logs an error.
 	 */
 	error(error: Error) {
