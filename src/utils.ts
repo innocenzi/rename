@@ -1,5 +1,4 @@
 import { access } from 'fs/promises'
-import { resolve } from 'path'
 
 export async function invoke(fn: Function, handleError?: (error: Error) => void) {
 	try {
@@ -9,20 +8,15 @@ export async function invoke(fn: Function, handleError?: (error: Error) => void)
 	}
 }
 
-export function tap<T>(value: T, callback: (value: T) => void): T {
-	callback(value)
+export async function tap<T>(value: T, callback: (value: T) => Promise<void>): Promise<T> {
+	await callback(value)
 	return value
 }
 
-export async function findDirectory(directory: string) {
-	if (!directory?.length) {
-		return process.cwd()
-	}
-
+export async function ensureExists(path: string) {
 	try {
-		await access(resolve(directory))
-		return resolve(directory)
-	} catch {
-		throw new Error(`Can not access ${directory}.`)
+		await access(path)
+	} catch (error) {
+		throw new Error(`Could not access ${path}.`)
 	}
 }

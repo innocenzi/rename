@@ -29,15 +29,20 @@ Note the following scenarios:
 
 - If you completely delete a line, the operations will be canceled.
 - If you rename multiple files with the exact same name, the last one will take over and the previous ones will be deleted.
+- If you are deeply renaming paths and have renamed the a shared base directory, you need to update other related paths accordingly.
 
 &nbsp;
 
 ## Options
 
-| Argument   | Description                                                            |
-| ---------- | ---------------------------------------------------------------------- |
-| `--dry`    | Prints the output to the console without actually applying the changes |
-| `--silent` | Prevents from printing to the console                                  |
+| Argument          | Description                                                            |
+| ----------------- | ---------------------------------------------------------------------- |
+| `--dry`           | Prints the output to the console without actually applying the changes |
+| `--silent`        | Prevents from printing to the console                                  |
+| `--dirs`          | Only match directories                                                 |
+| `--files`         | Only match files                                                       |
+| `--base <dir>`    | Defines the base directory in which the rename will be performed       |
+| `--depth <depth>` | Defines the maximum depth in case a globstar is used (`**`)            |
 
 &nbsp;
 
