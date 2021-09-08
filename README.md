@@ -27,9 +27,9 @@ In a directory, use `rn` to open your configured editor. Each line corresponds t
 
 Note the following scenarios: 
 
-- If you completely delete a line, the operations will be canceled.
+- If you completely delete a line, all operations will be canceled.
 - If you rename multiple files with the exact same name, the last one will take over and the previous ones will be deleted.
-- If you are deeply renaming paths and have renamed the a shared base directory, you need to update other related paths accordingly.
+- If you are deeply renaming paths and have renamed a shared base directory, you need to update other related paths accordingly.
 
 &nbsp;
 
